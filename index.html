@@ -13,9 +13,13 @@
     <style>
         body {
             cursor: url('images/cursormetal.png') 0 0, auto;
-            background-color: #4d5558;
-            background-image: linear-gradient(115deg, rgba(255, 255, 255, 0.16), transparent 24%, rgba(0, 0, 0, 0.18) 52%, transparent 78%), repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.035) 0, rgba(255, 255, 255, 0.035) 1px, transparent 1px, transparent 4px);
-            background-size: 100% 100%, 100% 5px;
+            background-color: #2a2d30;
+            background-image:
+                linear-gradient(135deg, rgba(100, 110, 115, 0.3) 0%, transparent 50%),
+                linear-gradient(45deg, rgba(80, 90, 95, 0.2) 0%, transparent 50%),
+                repeating-linear-gradient(90deg, rgba(60, 70, 75, 0.1) 0px, rgba(60, 70, 75, 0.1) 1px, transparent 1px, transparent 4px),
+                repeating-linear-gradient(0deg, rgba(60, 70, 75, 0.1) 0px, rgba(60, 70, 75, 0.1) 1px, transparent 1px, transparent 4px);
+            background-size: 100% 100%, 100% 100%, 100% 4px, 4px 100%;
             margin: 0;
             padding: 0;
             font-family: 'Handjet', cursive, sans-serif;
@@ -28,8 +32,10 @@
             inset: 0;
             pointer-events: none;
             z-index: 150;
-            background: linear-gradient(105deg, transparent 15%, rgba(255, 255, 255, 0.08) 48%, transparent 52%);
-            opacity: 0.45;
+            background:
+                linear-gradient(105deg, transparent 15%, rgba(180, 190, 195, 0.15) 48%, transparent 52%),
+                repeating-linear-gradient(0deg, rgba(100, 110, 115, 0.05) 0px, rgba(100, 110, 115, 0.05) 1px, transparent 1px, transparent 3px);
+            opacity: 0.6;
         }
 
         .access-screen {
@@ -51,10 +57,15 @@
             width: min(440px, 100%);
             padding: 34px;
             color: #fff;
-            background: linear-gradient(145deg, #687174, #292e30 48%, #515a5d);
-            border: 1px solid #aeb7b8;
-            border-radius: 8px;
-            box-shadow: 0 18px 50px rgba(0, 0, 0, 0.45);
+            background:
+                linear-gradient(145deg, #5a6065 0%, #3d4245 30%, #2a2d30 70%, #1a1c1e 100%),
+                repeating-linear-gradient(90deg, rgba(100, 110, 115, 0.1) 0px, rgba(100, 110, 115, 0.1) 1px, transparent 1px, transparent 8px);
+            border: 2px solid #6a7075;
+            border-radius: 4px;
+            box-shadow:
+                0 18px 50px rgba(0, 0, 0, 0.6),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1),
+                inset 0 -1px 0 rgba(0, 0, 0, 0.3);
         }
 
         .access-panel h1 {
@@ -77,11 +88,20 @@
             width: 100%;
             box-sizing: border-box;
             padding: 11px 12px;
-            border: 1px solid #999;
+            border: 1px solid #5a6065;
             border-radius: 4px;
-            background: #f3f3f3;
+            background:
+                linear-gradient(145deg, #3d4245 0%, #2a2d30 100%);
+            color: #e8eceb;
             font: inherit;
             font-size: 18px;
+            box-shadow: inset 0 1px 0 rgba(0, 0, 0, 0.3);
+        }
+
+        .access-panel input:focus {
+            outline: none;
+            border-color: #8a9095;
+            box-shadow: inset 0 1px 0 rgba(0, 0, 0, 0.3), 0 0 8px rgba(138, 144, 149, 0.3);
         }
 
         .access-actions {
@@ -93,17 +113,24 @@
         .access-actions button {
             flex: 1;
             padding: 11px 14px;
-            border: 0;
+            border: 1px solid #6a7075;
             border-radius: 4px;
-            background: #d7d7d7;
-            color: #1a1a1a;
+            background:
+                linear-gradient(145deg, #5a6065 0%, #3d4245 50%, #2a2d30 100%);
+            color: #e8eceb;
             font: inherit;
             font-size: 19px;
             cursor: pointer;
+            box-shadow:
+                inset 0 1px 0 rgba(255, 255, 255, 0.15),
+                inset 0 -1px 0 rgba(0, 0, 0, 0.3),
+                0 4px 8px rgba(0, 0, 0, 0.4);
         }
 
         .access-actions button:hover {
-            background: #fff;
+            background:
+                linear-gradient(145deg, #6a7075 0%, #4a5055 50%, #35383b 100%);
+            border-color: #8a9095;
         }
 
         .access-error {
@@ -123,9 +150,14 @@
         .v1_4 {
             width: 100%;
             height: 96px;
-            background: linear-gradient(180deg, #15191a, #4d5659 48%, #202526);
-            border-bottom: 4px solid #a72d2d;
-            box-shadow: 0 5px 18px rgba(0, 0, 0, 0.55), inset 0 -1px #c2c9ca;
+            background:
+                linear-gradient(180deg, #1a1c1e 0%, #3d4245 50%, #2a2d30 100%),
+                repeating-linear-gradient(90deg, rgba(100, 110, 115, 0.2) 0px, rgba(100, 110, 115, 0.2) 1px, transparent 1px, transparent 20px);
+            border-bottom: 3px solid #6a7075;
+            box-shadow:
+                0 5px 18px rgba(0, 0, 0, 0.7),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1),
+                inset 0 -1px 0 rgba(0, 0, 0, 0.4);
             position: fixed;
             top: 0;
             left: 0;
@@ -185,17 +217,26 @@
             display: none;
         }
 
+        .news-publish-only {
+            display: none;
+        }
+
         .personal-panel,
         .developer-panel {
             width: min(760px, 100%);
             box-sizing: border-box;
             margin: 24px auto 0;
             padding: 22px;
-            color: #151515;
-            background: linear-gradient(145deg, rgba(211, 217, 218, 0.94), rgba(91, 101, 104, 0.92));
-            border: 1px solid #d0d6d7;
+            color: #e8eceb;
+            background:
+                linear-gradient(145deg, rgba(60, 70, 75, 0.95) 0%, rgba(35, 40, 43, 0.92) 100%),
+                repeating-linear-gradient(90deg, rgba(100, 110, 115, 0.1) 0px, rgba(100, 110, 115, 0.1) 1px, transparent 1px, transparent 15px);
+            border: 1px solid #6a7075;
             border-radius: 3px;
-            box-shadow: inset 0 1px rgba(255, 255, 255, 0.55), 0 12px 24px rgba(0, 0, 0, 0.28);
+            box-shadow:
+                inset 0 1px 0 rgba(255, 255, 255, 0.1),
+                inset 0 -1px 0 rgba(0, 0, 0, 0.3),
+                0 12px 24px rgba(0, 0, 0, 0.5);
         }
 
         .video-box,
@@ -204,11 +245,16 @@
             box-sizing: border-box;
             margin: 24px auto 0;
             padding: 22px;
-            color: #151515;
-            background: linear-gradient(145deg, rgba(211, 217, 218, 0.94), rgba(91, 101, 104, 0.92));
-            border: 1px solid #d0d6d7;
+            color: #e8eceb;
+            background:
+                linear-gradient(145deg, rgba(60, 70, 75, 0.95) 0%, rgba(35, 40, 43, 0.92) 100%),
+                repeating-linear-gradient(90deg, rgba(100, 110, 115, 0.1) 0px, rgba(100, 110, 115, 0.1) 1px, transparent 1px, transparent 15px);
+            border: 1px solid #6a7075;
             border-radius: 3px;
-            box-shadow: inset 0 1px rgba(255, 255, 255, 0.55), 0 12px 24px rgba(0, 0, 0, 0.28);
+            box-shadow:
+                inset 0 1px 0 rgba(255, 255, 255, 0.1),
+                inset 0 -1px 0 rgba(0, 0, 0, 0.3),
+                0 12px 24px rgba(0, 0, 0, 0.5);
         }
 
         .control-box {
@@ -217,11 +263,16 @@
             margin: 24px auto 0;
             padding: 24px;
             color: #e8eceb;
-            background: rgba(18, 22, 23, 0.94);
-            border: 1px solid #697174;
-            border-top: 5px solid #a72d2d;
+            background:
+                linear-gradient(145deg, rgba(25, 30, 33, 0.96) 0%, rgba(15, 18, 20, 0.94) 100%),
+                repeating-linear-gradient(90deg, rgba(100, 110, 115, 0.08) 0px, rgba(100, 110, 115, 0.08) 1px, transparent 1px, transparent 12px);
+            border: 1px solid #5a6065;
+            border-top: 4px solid #a72d2d;
             border-radius: 2px;
-            box-shadow: 0 14px 30px rgba(0, 0, 0, 0.28);
+            box-shadow:
+                inset 0 1px 0 rgba(255, 255, 255, 0.08),
+                inset 0 -1px 0 rgba(0, 0, 0, 0.4),
+                0 14px 30px rgba(0, 0, 0, 0.6);
         }
 
         .control-box h2 {
@@ -245,8 +296,12 @@
 
         .status-card {
             padding: 14px;
-            background: #2c3234;
+            background:
+                linear-gradient(145deg, #3d4245 0%, #2a2d30 100%),
+                repeating-linear-gradient(90deg, rgba(100, 110, 115, 0.1) 0px, rgba(100, 110, 115, 0.1) 1px, transparent 1px, transparent 8px);
             border-left: 3px solid #a72d2d;
+            border: 1px solid #5a6065;
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
         }
 
         .status-card span {
@@ -554,9 +609,16 @@
             box-sizing: border-box;
             margin: 24px auto 0;
             padding: 22px;
-            color: #151515;
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 8px;
+            color: #e8eceb;
+            background:
+                linear-gradient(145deg, rgba(60, 70, 75, 0.95) 0%, rgba(35, 40, 43, 0.92) 100%),
+                repeating-linear-gradient(90deg, rgba(100, 110, 115, 0.1) 0px, rgba(100, 110, 115, 0.1) 1px, transparent 1px, transparent 15px);
+            border: 1px solid #6a7075;
+            border-radius: 4px;
+            box-shadow:
+                inset 0 1px 0 rgba(255, 255, 255, 0.1),
+                inset 0 -1px 0 rgba(0, 0, 0, 0.3),
+                0 12px 24px rgba(0, 0, 0, 0.5);
         }
 
         .notes-box h2,
@@ -615,11 +677,21 @@
             width: 100%;
             box-sizing: border-box;
             padding: 10px;
-            border: 1px solid #777;
+            border: 1px solid #5a6065;
             border-radius: 4px;
-            background: #f5f5f5;
+            background:
+                linear-gradient(145deg, #3d4245 0%, #2a2d30 100%);
+            color: #e8eceb;
             font: inherit;
             font-size: 18px;
+            box-shadow: inset 0 1px 0 rgba(0, 0, 0, 0.3);
+        }
+
+        .developer-panel input:focus,
+        .developer-panel textarea:focus {
+            outline: none;
+            border-color: #8a9095;
+            box-shadow: inset 0 1px 0 rgba(0, 0, 0, 0.3), 0 0 8px rgba(138, 144, 149, 0.3);
         }
 
         .developer-panel textarea {
@@ -630,13 +702,24 @@
         .developer-panel button {
             margin-top: 14px;
             padding: 9px 16px;
-            border: 0;
+            border: 1px solid #5a6065;
             border-radius: 4px;
-            background: #383838;
-            color: #fff;
+            background:
+                linear-gradient(145deg, #5a6065 0%, #3d4245 50%, #2a2d30 100%);
+            color: #e8eceb;
             font: inherit;
             font-size: 18px;
             cursor: pointer;
+            box-shadow:
+                inset 0 1px 0 rgba(255, 255, 255, 0.15),
+                inset 0 -1px 0 rgba(0, 0, 0, 0.3),
+                0 4px 8px rgba(0, 0, 0, 0.4);
+        }
+
+        .developer-panel button:hover {
+            background:
+                linear-gradient(145deg, #6a7075 0%, #4a5055 50%, #35383b 100%);
+            border-color: #8a9095;
         }
 
         .entry-list {
@@ -689,20 +772,158 @@
             background: #6b1f1f;
         }
 
+        /* Ретро стиль для карточек новин и архивов */
+        .news-card-retro {
+            background: #2a2a2a;
+            border: 2px solid #4a4a4a;
+            margin-bottom: 20px;
+            padding: 20px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            color: #ffffff;
+            box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.5);
+            position: relative;
+        }
+
+        .news-card-retro::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: repeating-linear-gradient(
+                0deg,
+                rgba(0, 0, 0, 0.1) 0px,
+                rgba(0, 0, 0, 0.1) 1px,
+                transparent 1px,
+                transparent 2px
+            );
+            pointer-events: none;
+        }
+
+        .news-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #4a4a4a;
+            position: relative;
+            z-index: 1;
+        }
+
+        .news-card-title {
+            color: #ff3333;
+            margin: 0;
+            font-size: 16px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .news-card-date {
+            color: #888888;
+            font-size: 12px;
+        }
+
+        .news-card-content {
+            color: #ffffff;
+            line-height: 1.6;
+            position: relative;
+            z-index: 1;
+        }
+
+        .news-card-retro:hover {
+            border-color: #6a6a6a;
+            box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.5), 0 0 10px rgba(255, 51, 51, 0.2);
+        }
+
+        /* Стили для файлов в новостях */
+        .news-files-section {
+            margin-top: 15px;
+            padding-top: 10px;
+            border-top: 1px solid #4a4a4a;
+            position: relative;
+            z-index: 1;
+        }
+
+        .news-files-section h5 {
+            color: #ff3333;
+            margin: 0 0 10px 0;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .news-file-item {
+            margin-bottom: 10px;
+            padding: 10px;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid #3a3a3a;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .news-video-player,
+        .news-audio-player {
+            width: 100%;
+            max-width: 100%;
+            border: 1px solid #4a4a4a;
+        }
+
+        .news-image {
+            max-width: 100%;
+            height: auto;
+            border: 1px solid #4a4a4a;
+            max-height: 300px;
+        }
+
+        .news-file-name {
+            color: #888888;
+            font-size: 12px;
+            word-break: break-all;
+        }
+
+        .news-download-btn {
+            display: inline-block;
+            padding: 6px 12px;
+            background: #3a3a3a;
+            color: #ffffff;
+            text-decoration: none;
+            border: 1px solid #5a5a5a;
+            font-size: 12px;
+            font-family: 'Courier New', monospace;
+            text-align: center;
+            transition: all 0.2s ease;
+        }
+
+        .news-download-btn:hover {
+            background: #4a4a4a;
+            border-color: #6a6a6a;
+            color: #ff3333;
+        }
+
         a.menu-link {
             text-decoration: none;
             color: #fff;
         }
 
         .menu-btn {
-            background: linear-gradient(145deg, #697477, #252a2c 52%, #535d60);
+            background:
+                linear-gradient(145deg, #5a6065 0%, #3d4245 50%, #2a2d30 100%),
+                repeating-linear-gradient(90deg, rgba(100, 110, 115, 0.15) 0px, rgba(100, 110, 115, 0.15) 1px, transparent 1px, transparent 10px);
             padding: 12px 20px;
             border-radius: 2px;
             font-size: 20px;
             transition: all 0.2s ease;
             cursor: pointer;
-            border: 1px solid #b4bdbf;
-            box-shadow: inset 0 1px rgba(255, 255, 255, 0.35), inset 0 -2px rgba(0, 0, 0, 0.3), 0 4px 8px rgba(0, 0, 0, 0.25);
+            border: 1px solid #6a7075;
+            box-shadow:
+                inset 0 1px 0 rgba(255, 255, 255, 0.15),
+                inset 0 -2px 0 rgba(0, 0, 0, 0.4),
+                0 4px 8px rgba(0, 0, 0, 0.5);
         }
 
         .menu-btn:hover {
@@ -767,12 +988,19 @@
         .organization-text {
             max-width: 780px;
             padding: 28px 34px;
-            color: #151515;
-            background: rgba(218, 220, 216, 0.92);
-            border-left: 8px solid #a72d2d;
-            border-radius: 8px;
+            color: #e8eceb;
+            background:
+                linear-gradient(145deg, rgba(60, 70, 75, 0.95) 0%, rgba(35, 40, 43, 0.92) 100%),
+                repeating-linear-gradient(90deg, rgba(100, 110, 115, 0.1) 0px, rgba(100, 110, 115, 0.1) 1px, transparent 1px, transparent 15px);
+            border-left: 6px solid #a72d2d;
+            border: 1px solid #6a7075;
+            border-radius: 4px;
             font-size: 27px;
             line-height: 1.25;
+            box-shadow:
+                inset 0 1px 0 rgba(255, 255, 255, 0.1),
+                inset 0 -1px 0 rgba(0, 0, 0, 0.3),
+                0 12px 24px rgba(0, 0, 0, 0.5);
         }
 
         .organization-text h2 {
@@ -1025,13 +1253,26 @@
         <!-- СТОРІНКА 1: НОВИНИ -->
         <div id="news-page" class="page-tab active-page">
             <div id="news-list" class="entry-list"></div>
-            <section class="developer-panel developer-only">
+            <section class="developer-panel developer-only" id="news-publish-panel">
                 <h2>Додати новину</h2>
-                <form id="news-form">
+                <form id="news-form" enctype="multipart/form-data">
                     <label for="news-title">Заголовок</label>
                     <input id="news-title" type="text" required>
                     <label for="news-content">Текст новини</label>
                     <textarea id="news-content" required></textarea>
+
+                    <label for="news-videos">Відео (максимум 5)</label>
+                    <input id="news-videos" type="file" accept="video/*" multiple>
+
+                    <label for="news-images">Зображення (максимум 10)</label>
+                    <input id="news-images" type="file" accept="image/*" multiple>
+
+                    <label for="news-audio">Аудіо (максимум 3)</label>
+                    <input id="news-audio" type="file" accept="audio/*" multiple>
+
+                    <label for="news-files">Інші файли (максимум 5)</label>
+                    <input id="news-files" type="file" multiple>
+
                     <button type="submit">Опублікувати новину</button>
                 </form>
             </section>
@@ -1049,8 +1290,31 @@
         <div id="archive-page" class="page-tab archive-access">
             <section class="developer-panel">
                 <h2>Архівні записи</h2>
-                <p>Режим перегляду: архів доступний тільки для читання.</p>
+                <p>Режим перегляду: архів доступный только для авторизованих пользователей.</p>
                 <div id="archive-list" class="entry-list"></div>
+            </section>
+            <section class="developer-panel developer-only" id="archive-publish-panel">
+                <h2>Додати архівний запис</h2>
+                <form id="archive-form" enctype="multipart/form-data">
+                    <label for="archive-title">Заголовок</label>
+                    <input id="archive-title" type="text" required>
+                    <label for="archive-content">Зміст запису</label>
+                    <textarea id="archive-content" required></textarea>
+
+                    <label for="archive-videos">Відео (максимум 5)</label>
+                    <input id="archive-videos" type="file" accept="video/*" multiple>
+
+                    <label for="archive-images">Зображення (максимум 10)</label>
+                    <input id="archive-images" type="file" accept="image/*" multiple>
+
+                    <label for="archive-audio">Аудіо (максимум 3)</label>
+                    <input id="archive-audio" type="file" accept="audio/*" multiple>
+
+                    <label for="archive-files">Інші файли (максимум 5)</label>
+                    <input id="archive-files" type="file" multiple>
+
+                    <button type="submit">Додати до архіву</button>
+                </form>
             </section>
         </div>
 
@@ -1237,8 +1501,8 @@
                     canUseVideos: true,
                     canUseGame: true,
                     canUseArchive: true,
-                    canPublishNews: false,
-                    canPublishArchive: false
+                    canPublishNews: true,
+                    canPublishArchive: true
                 },
                 developer: {
                     canUseOwnerTools: false,
@@ -1249,7 +1513,7 @@
                     canUseControlCenter: true,
                     canUseDeveloperNotes: true,
                     canUseArchive: true,
-                    canPublishNews: false,
+                    canPublishNews: true,
                     canPublishArchive: true
                 }
             };
@@ -1266,6 +1530,16 @@
 
             document.querySelectorAll('.developer-only').forEach(item => {
                 item.style.display = config.canUseDeveloperTools ? (item.classList.contains('page-tab') ? '' : 'block') : 'none';
+            });
+
+            // Показывать форму новин если можно публиковать новости
+            document.querySelectorAll('.developer-panel').forEach(item => {
+                if (item.querySelector('#news-form')) {
+                    item.style.display = config.canPublishNews ? 'block' : 'none';
+                }
+                if (item.querySelector('#archive-form')) {
+                    item.style.display = config.canPublishArchive ? 'block' : 'none';
+                }
             });
 
             document.querySelectorAll('.archive-access').forEach(item => {
@@ -1298,6 +1572,9 @@
             currentRole = role;
             document.getElementById('access-screen').classList.add('hidden');
             applyAccessState(role);
+            if (role === 'developer' || role === 'owner') {
+                loadArchive();
+            }
             if (role === 'developer') {
                 renderArchiveEntries();
             }
@@ -1398,51 +1675,11 @@
         document.getElementById('developer-notes').value = localStorage.getItem('scp13-developer-notes') || '';
         renderTaskList();
 
-        function renderEntries(entries, listId) {
-            const list = document.getElementById(listId);
-            list.innerHTML = entries.length ? entries.map(entry =>
-                `<article class="entry-item"><strong>${escapeHtml(entry.title)}</strong><p>${formatNewsText(entry.content)}</p></article>`
-            ).join('') : '<p class="empty-list">Новин поки немає.</p>';
-        }
 
-        const defaultNews = [{
-            title: 'ОБ\u2019ЄКТ №13: Комплекс міської міфології Чернівецького Ліцею №13',
-            content: `Збірний архів локальних міських легенд, шкільних страшилок та аномального фольклору, пов'язаного з будівлею та територією закладу.
 
-Замурований 13-й кабінет
-Суть: Легенда про кабінет №13, який був наглухо закладений цеглою після низки необґрунтованих подій. Свідки стверджують, що якщо прикласти вухо до стіни на третьому поверсі, можна почути звук шкільного дзвоника зсередини.
-Ймовірність правди: 0% (План будівлі стандартний, замурованих приміщень немає, а номери кабінетів змінювалися лише під час реорганізації).
 
-Підземні горизонти
-Суть: Повідомлення про розгалужену систему катакомб. Учнівський фольклор стверджує, що з підвалу-укриття веде запечатаний тунель, який з'єднує школу з військовими об'єктами на Южно-Кільцевій та центром Чернівців.
-Ймовірність правди: 1% (Підвал є звичайним технічним приміщенням з комунікаціями та стандартним цивільним укриттям).
 
-Фантом актового залу
-Суть: Міф про «привида актового залу». Переповідають, що після закінчення занять у порожньому темному залі лунають повільні кроки на сцені, рипіння підлоги та відлуння у коридорах.
-Ймовірність правди: 0% (Звичайні акустичні ефекти порожньої будівлі та температурна усадка дерев'яних конструкцій).
 
-Прокляття 13-ї сходинки
-Суть: Повір'я, за яким сходинка №13 на центральних сходах приносить невдачу. Вважається, що учень, який наступить на неї під час перерви, обов'язково отримає двійку або буде викликаний до директора.
-Ймовірність правди: 0% (Звичайний забобон для виправдання непідготовлених уроків).
-
-Старий цвинтар під майданчиком
-Суть: Популярна серед молодших класів байка про те, що спортивний майданчик ліцею збудований на місці давнього забутого цвинтаря, через що ввечері там спостерігаються дивні тіні.
-Ймовірність правди: 0% (На цій території історично були звичайні пустирі та поля до забудови району).`
-        }];
-
-        function formatNewsText(value) {
-            return escapeHtml(value).replace(/\n/g, '<br>');
-        }
-
-        function escapeHtml(value) {
-            return String(value || '').replace(/[&<>'"]/g, character => ({
-                '&': '&amp;',
-                '<': '&lt;',
-                '>': '&gt;',
-                "'": '&#39;',
-                '"': '&quot;'
-            })[character]);
-        }
 
         const archiveDb = new Promise((resolve, reject) => {
             const request = indexedDB.open('scp13-archive-files', 1);
@@ -1645,27 +1882,19 @@
             ).join('');
         }
 
-        function addEntry(event, titleId, contentId) {
-            event.preventDefault();
-            const entry = {
-                title: document.getElementById(titleId).value.trim(),
-                content: document.getElementById(contentId).value.trim(),
-                createdAt: Date.now()
-            };
 
-            const entries = JSON.parse(localStorage.getItem('scp13-news') || '[]');
-            entries.unshift(entry);
-            localStorage.setItem('scp13-news', JSON.stringify(entries));
-
-            event.target.reset();
-            renderEntries([...defaultNews, ...entries], 'news-list');
-        }
 
         document.getElementById('news-form').addEventListener('submit', event => {
-            addEntry(event, 'news-title', 'news-content');
+            event.preventDefault();
+            sendNews();
         });
 
-        renderEntries([...defaultNews, ...JSON.parse(localStorage.getItem('scp13-news') || '[]')], 'news-list');
+        document.getElementById('archive-form').addEventListener('submit', event => {
+            event.preventDefault();
+            sendArchive();
+        });
+
+
         renderArchiveEntries();
         renderVideoList();
         updateControlStats();
