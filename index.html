@@ -1,0 +1,1710 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css?family=Hammersmith+One&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Handjet&display=swap" rel="stylesheet" />
+    
+    <!-- Динамічний заголовок та іконка сайту (Favicon) -->
+    <title>НОВИНИ - SCP 13</title>
+    <link rel="icon" type="image/png" href="https://i.postimg.cc/D0y4CxhR/SCP-Logo.png">
+
+    <style>
+        body {
+            cursor: url('images/cursormetal.png') 0 0, auto;
+            background-color: #4d5558;
+            background-image: linear-gradient(115deg, rgba(255, 255, 255, 0.16), transparent 24%, rgba(0, 0, 0, 0.18) 52%, transparent 78%), repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.035) 0, rgba(255, 255, 255, 0.035) 1px, transparent 1px, transparent 4px);
+            background-size: 100% 100%, 100% 5px;
+            margin: 0;
+            padding: 0;
+            font-family: 'Handjet', cursive, sans-serif;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 150;
+            background: linear-gradient(105deg, transparent 15%, rgba(255, 255, 255, 0.08) 48%, transparent 52%);
+            opacity: 0.45;
+        }
+
+        .access-screen {
+            position: fixed;
+            inset: 0;
+            z-index: 200;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+            background: rgba(24, 24, 24, 0.94);
+        }
+
+        .access-screen.hidden {
+            display: none;
+        }
+
+        .access-panel {
+            width: min(440px, 100%);
+            padding: 34px;
+            color: #fff;
+            background: linear-gradient(145deg, #687174, #292e30 48%, #515a5d);
+            border: 1px solid #aeb7b8;
+            border-radius: 8px;
+            box-shadow: 0 18px 50px rgba(0, 0, 0, 0.45);
+        }
+
+        .access-panel h1 {
+            margin: 0 0 8px;
+            font-size: 34px;
+        }
+
+        .access-panel p {
+            margin: 0 0 24px;
+            font-size: 20px;
+        }
+
+        .access-panel label {
+            display: block;
+            margin: 14px 0 6px;
+            font-size: 20px;
+        }
+
+        .access-panel input {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 11px 12px;
+            border: 1px solid #999;
+            border-radius: 4px;
+            background: #f3f3f3;
+            font: inherit;
+            font-size: 18px;
+        }
+
+        .access-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 24px;
+        }
+
+        .access-actions button {
+            flex: 1;
+            padding: 11px 14px;
+            border: 0;
+            border-radius: 4px;
+            background: #d7d7d7;
+            color: #1a1a1a;
+            font: inherit;
+            font-size: 19px;
+            cursor: pointer;
+        }
+
+        .access-actions button:hover {
+            background: #fff;
+        }
+
+        .access-error {
+            min-height: 24px;
+            margin: 14px 0 0;
+            color: #ff9898;
+            font-size: 18px;
+        }
+
+        .v1_2 {
+            width: 100vw;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        /* Шапка */
+        .v1_4 {
+            width: 100%;
+            height: 96px;
+            background: linear-gradient(180deg, #15191a, #4d5659 48%, #202526);
+            border-bottom: 4px solid #a72d2d;
+            box-shadow: 0 5px 18px rgba(0, 0, 0, 0.55), inset 0 -1px #c2c9ca;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 100;
+        }
+
+        /* Блок логотипа та заголовка */
+        .header-brand {
+            position: fixed;
+            top: 15px;
+            left: 30px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            z-index: 101;
+        }
+
+        .scp-logo {
+            height: 45px;
+            width: auto;
+            transition: filter 0.2s ease;
+            display: block;
+        }
+
+        .scp-logo:hover {
+            filter: brightness(0.7);
+        }
+
+        .header-title {
+            color: #ffffff;
+            font-size: 25px;
+            font-weight: bold;
+            white-space: nowrap;
+            letter-spacing: 1px;
+        }
+
+        /* Кнопки меню */
+        .nav-menu {
+            position: fixed;
+            top: 112px;
+            left: 24px;
+            right: 24px;
+            display: flex;
+            gap: 12px;
+            justify-content: flex-end;
+            flex-wrap: wrap;
+            z-index: 101;
+        }
+
+        .developer-access-btn {
+            background: #6b1f1f;
+        }
+
+        .owner-only,
+        .developer-only,
+        .archive-access {
+            display: none;
+        }
+
+        .personal-panel,
+        .developer-panel {
+            width: min(760px, 100%);
+            box-sizing: border-box;
+            margin: 24px auto 0;
+            padding: 22px;
+            color: #151515;
+            background: linear-gradient(145deg, rgba(211, 217, 218, 0.94), rgba(91, 101, 104, 0.92));
+            border: 1px solid #d0d6d7;
+            border-radius: 3px;
+            box-shadow: inset 0 1px rgba(255, 255, 255, 0.55), 0 12px 24px rgba(0, 0, 0, 0.28);
+        }
+
+        .video-box,
+        .game-box {
+            width: min(760px, 100%);
+            box-sizing: border-box;
+            margin: 24px auto 0;
+            padding: 22px;
+            color: #151515;
+            background: linear-gradient(145deg, rgba(211, 217, 218, 0.94), rgba(91, 101, 104, 0.92));
+            border: 1px solid #d0d6d7;
+            border-radius: 3px;
+            box-shadow: inset 0 1px rgba(255, 255, 255, 0.55), 0 12px 24px rgba(0, 0, 0, 0.28);
+        }
+
+        .control-box {
+            width: min(900px, 100%);
+            box-sizing: border-box;
+            margin: 24px auto 0;
+            padding: 24px;
+            color: #e8eceb;
+            background: rgba(18, 22, 23, 0.94);
+            border: 1px solid #697174;
+            border-top: 5px solid #a72d2d;
+            border-radius: 2px;
+            box-shadow: 0 14px 30px rgba(0, 0, 0, 0.28);
+        }
+
+        .control-box h2 {
+            margin: 0;
+            color: #fff;
+            font-size: 30px;
+            letter-spacing: 1px;
+        }
+
+        .control-subtitle {
+            color: #aeb8b9;
+            font-size: 18px;
+        }
+
+        .control-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+            gap: 12px;
+            margin: 20px 0;
+        }
+
+        .status-card {
+            padding: 14px;
+            background: #2c3234;
+            border-left: 3px solid #a72d2d;
+        }
+
+        .status-card span {
+            display: block;
+            color: #aeb8b9;
+            font-size: 16px;
+        }
+
+        .status-card strong {
+            display: block;
+            margin-top: 5px;
+            color: #fff;
+            font-size: 24px;
+        }
+
+        .control-actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .control-actions button {
+            padding: 10px 16px;
+            border: 1px solid #697174;
+            border-radius: 2px;
+            background: #34393b;
+            color: #fff;
+            font: inherit;
+            font-size: 18px;
+            cursor: pointer;
+        }
+
+        .control-actions button:hover {
+            background: #541f22;
+            border-color: #d85c5c;
+        }
+
+        #incident-log {
+            min-height: 120px;
+            margin-top: 18px;
+            padding: 12px;
+            background: #111516;
+            border: 1px solid #3f484a;
+            color: #b8c2c2;
+            font-family: monospace;
+            font-size: 14px;
+            white-space: pre-wrap;
+        }
+
+        .video-box h2,
+        .game-box h2 {
+            margin-top: 0;
+            font-size: 28px;
+        }
+
+        .video-actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .video-actions input {
+            flex: 1;
+            min-width: 220px;
+            font: inherit;
+            font-size: 18px;
+        }
+
+        .video-actions button,
+        .game-box button {
+            padding: 10px 16px;
+            border: 0;
+            border-radius: 4px;
+            background: #383838;
+            color: #fff;
+            font: inherit;
+            font-size: 18px;
+            cursor: pointer;
+        }
+
+        #video-list {
+            display: grid;
+            gap: 16px;
+            margin-top: 18px;
+        }
+
+        .saved-video {
+            padding: 14px;
+            background: rgba(255, 255, 255, 0.16);
+            border-left: 4px solid #6b1f1f;
+        }
+
+        .saved-video strong {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 21px;
+        }
+
+        .saved-video video {
+            display: block;
+            width: 100%;
+            max-height: 360px;
+            background: #111;
+        }
+
+        .saved-video button {
+            margin-top: 10px;
+            padding: 7px 12px;
+            border: 0;
+            border-radius: 4px;
+            background: #6b1f1f;
+            color: #fff;
+            font: inherit;
+            cursor: pointer;
+        }
+
+        .youtube-embed {
+            margin-top: 24px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(0, 0, 0, 0.2);
+        }
+
+        .youtube-embed form {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .youtube-full-link {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin: 8px 0 18px;
+            padding: 12px 18px;
+            border-radius: 4px;
+            background: #c4302b;
+            color: #fff;
+            font: inherit;
+            font-size: 20px;
+            text-decoration: none;
+        }
+
+        .youtube-embed input {
+            flex: 1;
+            min-width: 220px;
+            box-sizing: border-box;
+            padding: 10px 12px;
+            border: 1px solid #777;
+            border-radius: 4px;
+            background: #f5f5f5;
+            font: inherit;
+            font-size: 18px;
+        }
+
+        .youtube-embed button {
+            padding: 10px 16px;
+            border: 0;
+            border-radius: 4px;
+            background: #6b1f1f;
+            color: #fff;
+            font: inherit;
+            font-size: 18px;
+            cursor: pointer;
+        }
+
+        #youtube-frame {
+            display: none;
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            margin-top: 16px;
+            border: 0;
+            background: #111;
+        }
+
+        .game-status {
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+            margin-bottom: 14px;
+            font-size: 21px;
+        }
+
+        #game-field {
+            position: relative;
+            height: 300px;
+            overflow: hidden;
+            border: 2px solid #383838;
+            border-radius: 6px;
+            background: rgba(0, 0, 0, 0.16);
+        }
+
+        #game-target {
+            position: absolute;
+            width: 58px;
+            height: 58px;
+            border: 0;
+            border-radius: 50%;
+            background: #8b0000;
+            color: #fff;
+            font: inherit;
+            font-size: 17px;
+            cursor: pointer;
+            transform: translate(-50%, -50%);
+        }
+
+        .personal-panel h2,
+        .notes-box h2,
+        .youtube-box h2 {
+            margin-top: 0;
+            font-size: 28px;
+        }
+
+        .owner-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 16px;
+            margin-top: 16px;
+        }
+
+        .mini-card {
+            padding: 16px;
+            background: rgba(255, 255, 255, 0.14);
+            border-radius: 8px;
+            border: 1px solid rgba(0, 0, 0, 0.12);
+            min-height: 120px;
+        }
+
+        .mini-card h3 {
+            margin: 0 0 10px;
+            font-size: 24px;
+        }
+
+        .mini-card p,
+        .mini-card ul {
+            margin: 0;
+            font-size: 18px;
+            line-height: 1.45;
+        }
+
+        .mini-card ul {
+            padding-left: 18px;
+        }
+
+        .owner-actions {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            margin-top: 18px;
+            flex-wrap: wrap;
+        }
+
+        .owner-actions input {
+            flex: 1;
+            min-width: 220px;
+            padding: 10px 12px;
+            border: 1px solid #777;
+            border-radius: 4px;
+            background: #f5f5f5;
+            font: inherit;
+            font-size: 18px;
+        }
+
+        .owner-actions button {
+            padding: 10px 16px;
+            border: 0;
+            border-radius: 4px;
+            background: #383838;
+            color: #fff;
+            font: inherit;
+            font-size: 18px;
+            cursor: pointer;
+        }
+
+        #task-list {
+            list-style: none;
+            padding: 0;
+            margin: 18px 0 0;
+            display: grid;
+            gap: 10px;
+        }
+
+        #task-list li {
+            display: flex;
+            justify-content: space-between;
+            gap: 14px;
+            padding: 12px 14px;
+            background: rgba(255, 255, 255, 0.12);
+            border-radius: 6px;
+            border-left: 4px solid #6b1f1f;
+            font-size: 18px;
+        }
+
+        #task-list button {
+            background: transparent;
+            border: none;
+            color: #1a1a1a;
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        .notes-box,
+        .youtube-box {
+            width: min(760px, 100%);
+            box-sizing: border-box;
+            margin: 24px auto 0;
+            padding: 22px;
+            color: #151515;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+        }
+
+        .notes-box h2,
+        .youtube-box h2 {
+            margin-top: 0;
+            font-size: 28px;
+        }
+
+        .notes-box textarea {
+            width: 100%;
+            min-height: 180px;
+            box-sizing: border-box;
+            padding: 12px;
+            border: 1px solid #777;
+            border-radius: 4px;
+            background: #f5f5f5;
+            font: inherit;
+            font-size: 18px;
+            resize: vertical;
+        }
+
+        .notes-box button,
+        .youtube-box a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 14px;
+            padding: 10px 16px;
+            border: 0;
+            border-radius: 4px;
+            background: #383838;
+            color: #fff;
+            font: inherit;
+            font-size: 18px;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .youtube-box a {
+            background: #6b1f1f;
+        }
+
+        .developer-panel h2 {
+            margin-top: 0;
+            font-size: 28px;
+        }
+
+        .developer-panel label {
+            display: block;
+            margin: 12px 0 5px;
+            font-size: 20px;
+        }
+
+        .developer-panel input,
+        .developer-panel textarea {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 10px;
+            border: 1px solid #777;
+            border-radius: 4px;
+            background: #f5f5f5;
+            font: inherit;
+            font-size: 18px;
+        }
+
+        .developer-panel textarea {
+            min-height: 90px;
+            resize: vertical;
+        }
+
+        .developer-panel button {
+            margin-top: 14px;
+            padding: 9px 16px;
+            border: 0;
+            border-radius: 4px;
+            background: #383838;
+            color: #fff;
+            font: inherit;
+            font-size: 18px;
+            cursor: pointer;
+        }
+
+        .entry-list {
+            margin-top: 18px;
+        }
+
+        .entry-item {
+            margin-top: 10px;
+            padding: 12px 15px;
+            background: rgba(255, 255, 255, 0.25);
+            border-left: 4px solid #6b1f1f;
+        }
+
+        .entry-item strong {
+            display: block;
+            font-size: 22px;
+        }
+
+        .entry-item p {
+            margin: 5px 0 0;
+            font-size: 19px;
+            white-space: pre-wrap;
+        }
+
+        .empty-list {
+            margin: 18px 0;
+            color: #1a1a1a;
+            font-size: 22px;
+            text-align: center;
+        }
+
+        .archive-files {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 12px;
+        }
+
+        .archive-file {
+            display: inline-block;
+            padding: 7px 10px;
+            border-radius: 4px;
+            background: #383838;
+            color: #fff;
+            text-decoration: none;
+            font-size: 17px;
+        }
+
+        .archive-file:hover {
+            background: #6b1f1f;
+        }
+
+        a.menu-link {
+            text-decoration: none;
+            color: #fff;
+        }
+
+        .menu-btn {
+            background: linear-gradient(145deg, #697477, #252a2c 52%, #535d60);
+            padding: 12px 20px;
+            border-radius: 2px;
+            font-size: 20px;
+            transition: all 0.2s ease;
+            cursor: pointer;
+            border: 1px solid #b4bdbf;
+            box-shadow: inset 0 1px rgba(255, 255, 255, 0.35), inset 0 -2px rgba(0, 0, 0, 0.3), 0 4px 8px rgba(0, 0, 0, 0.25);
+        }
+
+        .menu-btn:hover {
+            filter: brightness(0.8);
+            transform: scale(1.03);
+        }
+
+        .menu-link.active .menu-btn {
+            background: linear-gradient(145deg, #8c393b, #42191b 52%, #702629);
+            border-color: #d85c5c;
+            box-shadow: 0 0 8px rgba(0,0,0,0.5);
+        }
+
+        /* Стилі для вкладок/сторінок */
+        .page-tab {
+            display: none;
+            padding-top: 190px;
+            max-width: 1080px;
+            margin: 0 auto;
+            padding-bottom: 50px;
+        }
+
+        .page-tab.active-page {
+            display: flex;
+        }
+
+        /* Сторінка "Новини" */
+        #news-page.active-page {
+            display: block;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .no-news-text {
+            font-size: 36px;
+            color: #1a1a1a;
+            background: linear-gradient(145deg, rgba(211, 217, 218, 0.9), rgba(76, 85, 88, 0.82));
+            border: 1px solid #bfc8c9;
+            box-shadow: inset 0 1px rgba(255, 255, 255, 0.5), 0 10px 22px rgba(0, 0, 0, 0.25);
+            padding: 20px 40px;
+            border-radius: 8px;
+            backdrop-filter: blur(5px);
+            text-align: center;
+        }
+
+        /* Сторінка "Аномалії" */
+        #anomalies-page {
+            align-items: center;
+            justify-content: center;
+            gap: 35px;
+            flex-wrap: wrap;
+        }
+
+        #organization-page {
+            justify-content: center;
+        }
+
+        #archive-page {
+            justify-content: center;
+        }
+
+        .organization-text {
+            max-width: 780px;
+            padding: 28px 34px;
+            color: #151515;
+            background: rgba(218, 220, 216, 0.92);
+            border-left: 8px solid #a72d2d;
+            border-radius: 8px;
+            font-size: 27px;
+            line-height: 1.25;
+        }
+
+        .organization-text h2 {
+            margin-top: 0;
+        }
+
+        .v1_14 {
+            width: 350px;
+            height: 350px;
+            object-fit: contain;
+            filter: drop-shadow(0px 8px 12px rgba(0,0,0,0.3));
+        }
+
+        .anomaly-pants-image {
+            mix-blend-mode: multiply;
+        }
+
+        .v2_17 {
+            width: 470px;
+            font-size: 26px;
+            color: #000;
+            line-height: 1.25;
+            background: linear-gradient(145deg, rgba(220, 225, 226, 0.92), rgba(92, 102, 105, 0.86));
+            border: 1px solid #cbd2d3;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: inset 0 1px rgba(255, 255, 255, 0.55), 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .v2_17 b {
+            font-size: 33px;
+            color: #1a1a1a;
+        }
+
+        /* Блок складності */
+        .hazard-level {
+            display: inline-block;
+            margin-top: 12px;
+            padding: 6px 12px;
+            background: #8b0000;
+            color: #ffffff;
+            font-size: 20px;
+            font-weight: bold;
+            border-radius: 4px;
+            border: 1px solid #ff4d4d;
+        }
+
+        @media (max-width: 700px) {
+            body {
+                overflow-x: hidden;
+            }
+
+            .v1_4 {
+                height: 132px;
+            }
+
+            .header-brand {
+                position: absolute;
+                top: 9px;
+                left: 16px;
+                right: 16px;
+                gap: 9px;
+            }
+
+            .scp-logo {
+                height: 37px;
+            }
+
+            .header-title {
+                font-size: 17px;
+                line-height: 1.05;
+                white-space: normal;
+                max-width: calc(100vw - 70px);
+            }
+
+            body {
+                cursor: auto;
+            }
+
+            .nav-menu {
+                position: absolute;
+                top: 78px;
+                left: 12px;
+                right: 12px;
+                display: grid;
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                gap: 7px;
+            }
+
+            .nav-menu .menu-link {
+                min-width: 0;
+            }
+
+            .menu-btn {
+                box-sizing: border-box;
+                min-height: 38px;
+                padding: 7px 5px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                text-align: center;
+                font-size: 15px;
+                line-height: 1;
+            }
+
+            .page-tab,
+            #news-page.active-page {
+                width: 100%;
+                box-sizing: border-box;
+                padding: 190px 12px 22px;
+            }
+
+            .no-news-text {
+                width: 100%;
+                box-sizing: border-box;
+                padding: 15px 12px;
+                font-size: 24px;
+            }
+
+            .organization-text,
+            .developer-panel,
+            .video-box,
+            .game-box,
+            .control-box,
+            .v2_17 {
+                width: 100%;
+                box-sizing: border-box;
+                padding: 15px;
+                font-size: 19px;
+            }
+
+            .organization-text h2,
+            .developer-panel h2 {
+                font-size: 24px;
+            }
+
+            #anomalies-page {
+                flex-direction: column;
+                gap: 12px;
+            }
+
+            .v1_14 {
+                width: min(72vw, 280px);
+                height: auto;
+            }
+
+            .v2_17 b {
+                font-size: 27px;
+            }
+
+            .access-screen {
+                padding: 14px;
+            }
+
+            .access-panel {
+                padding: 22px 18px;
+            }
+
+            .access-panel h1 {
+                font-size: 29px;
+            }
+
+            .access-actions {
+                flex-direction: column;
+            }
+
+            .access-actions button,
+            .developer-panel button {
+                min-height: 45px;
+            }
+
+            .archive-files {
+                flex-direction: column;
+            }
+
+            .archive-file {
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <section id="access-screen" class="access-screen hidden">
+        <form id="developer-login" class="access-panel">
+            <h1>Доступ SCP 13</h1>
+            <p>Увійдіть як працівник або продовжте як гість.</p>
+            <label for="developer-login-name">Логін працівника</label>
+            <input id="developer-login-name" name="login" type="text" autocomplete="username" required>
+            <label for="developer-password">Пароль</label>
+            <input id="developer-password" name="password" type="password" autocomplete="current-password" required>
+            <div class="access-actions">
+                <button type="submit">Увійти</button>
+                <button type="button" id="guest-access">Режим гостя</button>
+            </div>
+            <div id="access-error" class="access-error" role="alert"></div>
+        </form>
+    </section>
+
+    <div class="v1_2">
+        <div class="v1_4"></div>
+        
+        <!-- Шапка -->
+        <div class="header-brand">
+            <a href="#" class="scp-logo-link">
+                <img src="https://i.postimg.cc/PfwYFHq3/remove-photos-removed-background.png" alt="SCP Logo" class="scp-logo">
+            </a>
+            <span class="header-title">Аномалії Чернівецького Ліцею Номер 13</span>
+        </div>
+        
+        <!-- Меню -->
+        <div class="nav-menu">
+            <a href="#" class="menu-link active" onclick="switchPage('news-page', this, 'НОВИНИ - SCP 13'); return false;">
+                <div class="menu-btn">НОВИНИ</div>
+            </a>
+            <a href="#" class="menu-link" onclick="switchPage('anomalies-page', this, 'АНОМАЛІЇ - SCP 13'); return false;">
+                <div class="menu-btn">АНОМАЛІЇ</div>
+            </a>
+            <a href="#" class="menu-link" onclick="switchPage('organization-page', this, 'ПРО ОРГАНІЗАЦІЮ - SCP 13'); return false;">
+                <div class="menu-btn">ПРО ОРГАНІЗАЦІЮ</div>
+            </a>
+            <a id="developer-access-link" href="#" class="menu-link" onclick="openDeveloperLogin(); return false;">
+                <div class="menu-btn developer-access-btn">ВХІД ПРАЦІВНИКА</div>
+            </a>
+            <a id="guest-return-link" href="#" class="menu-link owner-only" onclick="logout(); return false;">
+                <div class="menu-btn">ПОВЕРНУТИСЯ ДО ГОСТЯ</div>
+            </a>
+            <a id="personal-link" href="#" class="menu-link owner-only" onclick="switchPage('personal-page', this, 'КАБІНЕТ - SCP 13'); return false;">
+                <div class="menu-btn">КАБІНЕТ</div>
+            </a>
+            <a id="notes-link" href="#" class="menu-link owner-only" onclick="switchPage('notes-page', this, 'НОТАТКИ - SCP 13'); return false;">
+                <div class="menu-btn">НОТАТКИ ПРАЦІВНИКА</div>
+            </a>
+            <a id="videos-link" href="#" class="menu-link owner-only" onclick="switchPage('videos-page', this, 'ВІДЕО - SCP 13'); return false;">
+                <div class="menu-btn">МОЇ ВІДЕО</div>
+            </a>
+            <a id="game-link" href="#" class="menu-link owner-only" onclick="switchPage('game-page', this, 'ГРА - SCP 13'); return false;">
+                <div class="menu-btn">МІНІ-ГРА</div>
+            </a>
+            <a id="control-link" href="#" class="menu-link developer-only" onclick="switchPage('control-page', this, 'ЦЕНТР КЕРУВАННЯ - SCP 13'); return false;">
+                <div class="menu-btn developer-access-btn">ЦЕНТР КЕРУВАННЯ</div>
+            </a>
+            <a id="developer-notes-link" href="#" class="menu-link developer-only" onclick="switchPage('developer-notes-page', this, 'НОТАТКИ ПРАЦІВНИКА - SCP 13'); return false;">
+                <div class="menu-btn">НОТАТКИ</div>
+            </a>
+            <a id="archive-link" href="#" class="menu-link archive-access" onclick="switchPage('archive-page', this, 'АРХІВ - SCP 13'); return false;">
+                <div class="menu-btn">АРХІВ</div>
+            </a>
+        </div>
+
+        <!-- СТОРІНКА 1: НОВИНИ -->
+        <div id="news-page" class="page-tab active-page">
+            <div id="news-list" class="entry-list"></div>
+            <section class="developer-panel developer-only">
+                <h2>Додати новину</h2>
+                <form id="news-form">
+                    <label for="news-title">Заголовок</label>
+                    <input id="news-title" type="text" required>
+                    <label for="news-content">Текст новини</label>
+                    <textarea id="news-content" required></textarea>
+                    <button type="submit">Опублікувати новину</button>
+                </form>
+            </section>
+        </div>
+
+        <div id="organization-page" class="page-tab">
+            <div class="organization-text">
+                <h2>Про організацію SCP 13</h2>
+                <p>Ми досліджуємо незвичайні явища, що можуть бути пов’язані з Чернівецьким ліцеєм номер 13.</p>
+                <p>Тут просто збирають аномалії та інформацію про них. Булінг заборонений.</p>
+                <p>Слідкуйте за новинами та дотримуйтеся правил безпеки.</p>
+            </div>
+        </div>
+
+        <div id="archive-page" class="page-tab archive-access">
+            <section class="developer-panel">
+                <h2>Архівні записи</h2>
+                <p>Режим перегляду: архів доступний тільки для читання.</p>
+                <div id="archive-list" class="entry-list"></div>
+            </section>
+        </div>
+
+        <div id="personal-page" class="page-tab owner-only">
+            <section class="personal-panel">
+                <h2>Особистий кабінет</h2>
+                <div class="owner-grid">
+                    <div class="mini-card">
+                        <h3>План</h3>
+                        <p>Швидкий контроль: теги, задачі та важливі помітки.</p>
+                    </div>
+                    <div class="mini-card">
+                        <h3>Плюшки</h3>
+                        <ul>
+                            <li>Личні нотатки</li>
+                            <li>Задачі</li>
+                            <li>YouTube</li>
+                        </ul>
+                    </div>
+                    <div class="mini-card">
+                        <h3>Короткий доступ</h3>
+                        <p>Швидкий перехід до особистого блоку без зайвих панелей.</p>
+                    </div>
+                </div>
+
+                <div class="owner-actions">
+                    <input id="task-input" type="text" placeholder="Нова задача..." maxlength="120">
+                    <button type="button" id="add-task-btn">Додати задачу</button>
+                </div>
+
+                <ul id="task-list"></ul>
+            </section>
+        </div>
+
+        <div id="notes-page" class="page-tab owner-only">
+            <section class="notes-box">
+                <h2>Особисті нотатки</h2>
+                <textarea id="personal-notes" placeholder="Тут ви можете зберігати свої думки, плани або важливі написи..."></textarea>
+                <button type="button" id="save-notes-btn">Зберегти нотатки</button>
+            </section>
+        </div>
+
+        <div id="developer-notes-page" class="page-tab developer-only">
+            <section class="notes-box">
+                <h2>Нотатки працівника</h2>
+                <textarea id="developer-notes" placeholder="Технічні записи, ідеї та плани працівника..."></textarea>
+                <button type="button" id="save-developer-notes-btn">Зберегти нотатки</button>
+            </section>
+        </div>
+
+        <div id="videos-page" class="page-tab owner-only">
+            <section class="video-box">
+                <h2>Мої відео</h2>
+                <p>Відео зберігаються локально у цьому браузері та доступні тільки на цьому пристрої.</p>
+                <div class="video-actions">
+                    <input id="video-input" type="file" accept="video/*">
+                    <button type="button" id="add-video-btn">Додати відео</button>
+                </div>
+                <div id="video-list"></div>
+                <div class="youtube-embed">
+                    <h2>Повний YouTube</h2>
+                    <a class="youtube-full-link" href="https://www.youtube.com/" target="_blank" rel="noopener noreferrer">Відкрити YouTube</a>
+                    <form id="youtube-form">
+                        <input id="youtube-url" type="url" placeholder="Або вставте посилання на відео" required>
+                        <button type="submit">Переглянути тут</button>
+                    </form>
+                    <iframe id="youtube-frame" title="YouTube для власника" allowfullscreen></iframe>
+                </div>
+            </section>
+        </div>
+
+        <div id="game-page" class="page-tab owner-only">
+            <section class="game-box">
+                <h2>Міні-гра: злови аномалію</h2>
+                <div class="game-status">
+                    <span>Очки: <b id="game-score">0</b></span>
+                    <span>Час: <b id="game-time">30</b></span>
+                </div>
+                <button type="button" id="start-game-btn">Почати гру</button>
+                <div id="game-field" aria-label="Ігрове поле">
+                    <button type="button" id="game-target" hidden>Злови</button>
+                </div>
+            </section>
+        </div>
+
+        <div id="control-page" class="page-tab developer-only">
+            <section class="control-box">
+                <h2>Центр керування SCP 13</h2>
+                <p class="control-subtitle">Внутрішня панель працівника / локальний режим тестування</p>
+                <div class="control-grid">
+                    <div class="status-card"><span>Стан системи</span><strong id="system-status">НОРМА</strong></div>
+                    <div class="status-card"><span>Рівень допуску</span><strong>ОMEГА-13</strong></div>
+                    <div class="status-card"><span>Локальних задач</span><strong id="task-count">0</strong></div>
+                    <div class="status-card"><span>Записів архіву</span><strong id="archive-count">0</strong></div>
+                </div>
+                <div class="control-actions">
+                    <button type="button" id="incident-btn">Згенерувати тестовий інцидент</button>
+                    <button type="button" id="clear-log-btn">Очистити журнал</button>
+                </div>
+                <div id="incident-log">[SYSTEM] Панель готова до роботи.</div>
+            </section>
+        </div>
+
+        <!-- СТОРІНКА 2: АНОМАЛІЇ -->
+        <div id="anomalies-page" class="page-tab">
+            <img src="https://i.postimg.cc/T1Y5ktxn/image-removebg-preview.png" class="v1_14" alt="SCP Аномалія Миша 67">
+
+            <div class="v2_17">
+                <b>SCP_67_13</b> - Це аномалія з 13 ліцею.<br><br>
+                Якщо Ви побачили цю аномалію, тоді біжіть куди очі дивляться.<br><br>
+                Аномалія не швидка, так що ви легко втечете.<br><br>
+                <div class="hazard-level">Складність: Низька (Класифікація: Безпечний / Safe)</div>
+            </div>
+
+            <img src="https://i.postimg.cc/NFqWhg7S/image.png" class="v1_14 anomaly-pants-image" alt="Аномалія Штани з 1 вересня">
+
+            <div class="v2_17 anomaly-card">
+                <b>SCP_1_13</b> - Це аномальні штани, знайдені після 1 вересня.<br><br>
+                Після контакту зі штанами на них з'являється шерсть.<br><br>
+                Аномалія не небезпечна та не становить загрози для людей.<br><br>
+                <div class="hazard-level">Складність: Низька (Класифікація: Безпечна / Safe)</div>
+            </div>
+
+            <img src="https://i.postimg.cc/bvLJNBBy/image-removebg-preview-(1).png" class="v1_14" alt="Аномалія Надя, 6 клас">
+
+            <div class="v2_17 anomaly-card">
+                <b>SCP_6_13</b> - Аномалія з 6 класу.<br><br>
+                Рівень дуже небезпечний: у будь-який момент може напасти.<br><br>
+                Від аномалії легко сховатися.<br><br>
+                <div class="hazard-level">Складність: Висока (Класифікація: Небезпечна / Euclid)</div>
+            </div>
+
+            <div class="v2_17 anomaly-card">
+                <b>SCP_68_13</b><br><br>
+                <strong>Стать:</strong> Лінолеум<br><br>
+                <strong>Рівень небезпеки:</strong> дуже небезпечно!!!<br><br>
+                <strong>Шанси вижити:</strong> 20-50%<br><br>
+                <strong>Поради:</strong> не підходьте надто близько та уникайте прямого спостереження. Якщо аномалія дуже агресивна, тікайте й не озирайтеся. Спроба дістатися до вчителя дає шанс на порятунок, але гарантій немає.<br><br>
+                <div class="hazard-level">Складність: Дуже висока (Класифікація: Небезпечна / Euclid)</div>
+            </div>
+
+            <img src="https://i.postimg.cc/Bv1grRZ5/image.png" class="v1_14" alt="Аномалія Надіїга 67">
+
+            <img src="https://i.postimg.cc/3JsWLq6W/photo-2026-09-04-19-51-22-removebg-preview.png" class="v1_14" alt="Аномалія Егор">
+
+            <div class="v2_17 anomaly-card">
+                <b>SCP_47_13</b> - Кремезний хлопчик, який любить провокувати бійки.<br><br>
+                Аномалія може вступити в конфлікт, але від неї легко втекти.<br><br>
+                Рекомендується не реагувати на провокації та тримати дистанцію.<br><br>
+                <div class="hazard-level">Складність: Низька (Класифікація: 50/50)</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Скрипт для зміни сторінок та назви вкладки браузера -->
+    <script>
+        let currentRole = 'guest';
+        const accountSecrets = {
+            owner: {
+                login: atob('bWlzaGExMw=='),
+                password: atob('TWlzaGExM1NDUCE=')
+            },
+            developer: {
+                login: atob('c2NwMTNvcmdhbml6YXRpb24='),
+                password: atob('c2NwMTNfMTQ4OF81Ml82N19hc2RlZG5kaWtmaGpqZm5oZms=')
+            }
+        };
+
+        function getRoleConfig(role) {
+            const configs = {
+                guest: {
+                    canUseOwnerTools: false,
+                    canUseDeveloperTools: false,
+                    canUseNotes: false,
+                    canUseVideos: false,
+                    canUseGame: false,
+                    canPublishNews: false,
+                    canPublishArchive: false
+                },
+                owner: {
+                    canUseOwnerTools: true,
+                    canUseDeveloperTools: false,
+                    canUseNotes: true,
+                    canUseVideos: true,
+                    canUseGame: true,
+                    canUseArchive: true,
+                    canPublishNews: false,
+                    canPublishArchive: false
+                },
+                developer: {
+                    canUseOwnerTools: false,
+                    canUseDeveloperTools: true,
+                    canUseNotes: false,
+                    canUseVideos: false,
+                    canUseGame: false,
+                    canUseControlCenter: true,
+                    canUseDeveloperNotes: true,
+                    canUseArchive: true,
+                    canPublishNews: false,
+                    canPublishArchive: true
+                }
+            };
+
+            return configs[role] || configs.guest;
+        }
+
+        function applyAccessState(role) {
+            const config = getRoleConfig(role);
+
+            document.querySelectorAll('.owner-only').forEach(item => {
+                item.style.display = config.canUseOwnerTools ? '' : 'none';
+            });
+
+            document.querySelectorAll('.developer-only').forEach(item => {
+                item.style.display = config.canUseDeveloperTools ? (item.classList.contains('page-tab') ? '' : 'block') : 'none';
+            });
+
+            document.querySelectorAll('.archive-access').forEach(item => {
+                item.style.display = config.canUseArchive ? (item.classList.contains('page-tab') ? '' : 'block') : 'none';
+            });
+
+            const anomaliesLink = document.querySelector('[onclick*="anomalies-page"]');
+            if (anomaliesLink) {
+                anomaliesLink.style.display = role === 'guest' ? 'none' : '';
+            }
+
+            document.getElementById('developer-access-link').style.display = role === 'guest' ? '' : 'none';
+            document.getElementById('guest-return-link').style.display = role === 'guest' ? 'none' : 'block';
+            document.getElementById('personal-link').style.display = config.canUseOwnerTools ? 'block' : 'none';
+            document.getElementById('notes-link').style.display = config.canUseNotes ? 'block' : 'none';
+            document.getElementById('videos-link').style.display = config.canUseVideos ? 'block' : 'none';
+            document.getElementById('game-link').style.display = config.canUseGame ? 'block' : 'none';
+            document.getElementById('control-link').style.display = config.canUseControlCenter ? 'block' : 'none';
+            document.getElementById('developer-notes-link').style.display = config.canUseDeveloperNotes ? 'block' : 'none';
+            document.getElementById('archive-link').style.display = config.canUseArchive ? 'block' : 'none';
+
+            const anomaliesPage = document.getElementById('anomalies-page');
+            const archivePage = document.getElementById('archive-page');
+            if (role === 'guest' && (anomaliesPage.classList.contains('active-page') || archivePage.classList.contains('active-page'))) {
+                switchPage('news-page', document.querySelector('[onclick*="news-page"]'), 'НОВИНИ - SCP 13');
+            }
+        }
+
+        function enterSite(role) {
+            currentRole = role;
+            document.getElementById('access-screen').classList.add('hidden');
+            applyAccessState(role);
+            if (role === 'developer') {
+                renderArchiveEntries();
+            }
+        }
+
+        function openDeveloperLogin() {
+            document.getElementById('access-screen').classList.remove('hidden');
+            document.getElementById('developer-login-name').focus();
+        }
+
+        async function logout() {
+            enterSite('guest');
+        }
+
+        document.getElementById('developer-login').addEventListener('submit', function (event) {
+            event.preventDefault();
+            const login = document.getElementById('developer-login-name').value.trim();
+            const password = document.getElementById('developer-password').value.trim();
+            const error = document.getElementById('access-error');
+
+            const matchedRole = Object.keys(accountSecrets).find(role => {
+                const account = accountSecrets[role];
+                return account.login === login && account.password === password;
+            });
+
+            if (matchedRole) {
+                enterSite(matchedRole);
+                error.textContent = '';
+                document.getElementById('developer-login').reset();
+            } else {
+                error.textContent = 'Невірний логін або пароль.';
+            }
+        });
+
+        document.getElementById('guest-access').addEventListener('click', function () {
+            enterSite('guest');
+        });
+
+        function renderTaskList() {
+            const tasks = JSON.parse(localStorage.getItem('scp13-owner-tasks') || '[]');
+            const list = document.getElementById('task-list');
+            list.innerHTML = tasks.map((task, index) => `
+                <li>
+                    <span>${escapeHtml(task)}</span>
+                    <button type="button" data-index="${index}" aria-label="Видалити задачу">×</button>
+                </li>
+            `).join('');
+        }
+
+        document.getElementById('add-task-btn').addEventListener('click', function () {
+            const input = document.getElementById('task-input');
+            const value = input.value.trim();
+            if (!value) {
+                return;
+            }
+
+            const tasks = JSON.parse(localStorage.getItem('scp13-owner-tasks') || '[]');
+            tasks.unshift(value);
+            localStorage.setItem('scp13-owner-tasks', JSON.stringify(tasks));
+            input.value = '';
+            renderTaskList();
+            updateControlStats();
+        });
+
+        document.getElementById('task-list').addEventListener('click', function (event) {
+            const button = event.target.closest('button[data-index]');
+            if (!button) {
+                return;
+            }
+
+            const tasks = JSON.parse(localStorage.getItem('scp13-owner-tasks') || '[]');
+            tasks.splice(Number(button.dataset.index), 1);
+            localStorage.setItem('scp13-owner-tasks', JSON.stringify(tasks));
+            renderTaskList();
+        });
+
+        document.getElementById('save-notes-btn').addEventListener('click', function () {
+            const noteText = document.getElementById('personal-notes').value;
+            localStorage.setItem('scp13-personal-notes', noteText);
+            const button = document.getElementById('save-notes-btn');
+            button.textContent = 'Збережено';
+            setTimeout(() => {
+                button.textContent = 'Зберегти нотатки';
+            }, 900);
+        });
+
+        document.getElementById('save-developer-notes-btn').addEventListener('click', function () {
+            const noteText = document.getElementById('developer-notes').value;
+            localStorage.setItem('scp13-developer-notes', noteText);
+            const button = document.getElementById('save-developer-notes-btn');
+            button.textContent = 'Збережено';
+            setTimeout(() => {
+                button.textContent = 'Зберегти нотатки';
+            }, 900);
+        });
+
+        document.getElementById('personal-notes').value = localStorage.getItem('scp13-personal-notes') || '';
+        document.getElementById('developer-notes').value = localStorage.getItem('scp13-developer-notes') || '';
+        renderTaskList();
+
+        function renderEntries(entries, listId) {
+            const list = document.getElementById(listId);
+            list.innerHTML = entries.length ? entries.map(entry =>
+                `<article class="entry-item"><strong>${escapeHtml(entry.title)}</strong><p>${formatNewsText(entry.content)}</p></article>`
+            ).join('') : '<p class="empty-list">Новин поки немає.</p>';
+        }
+
+        const defaultNews = [{
+            title: 'ОБ\u2019ЄКТ №13: Комплекс міської міфології Чернівецького Ліцею №13',
+            content: `Збірний архів локальних міських легенд, шкільних страшилок та аномального фольклору, пов'язаного з будівлею та територією закладу.
+
+Замурований 13-й кабінет
+Суть: Легенда про кабінет №13, який був наглухо закладений цеглою після низки необґрунтованих подій. Свідки стверджують, що якщо прикласти вухо до стіни на третьому поверсі, можна почути звук шкільного дзвоника зсередини.
+Ймовірність правди: 0% (План будівлі стандартний, замурованих приміщень немає, а номери кабінетів змінювалися лише під час реорганізації).
+
+Підземні горизонти
+Суть: Повідомлення про розгалужену систему катакомб. Учнівський фольклор стверджує, що з підвалу-укриття веде запечатаний тунель, який з'єднує школу з військовими об'єктами на Южно-Кільцевій та центром Чернівців.
+Ймовірність правди: 1% (Підвал є звичайним технічним приміщенням з комунікаціями та стандартним цивільним укриттям).
+
+Фантом актового залу
+Суть: Міф про «привида актового залу». Переповідають, що після закінчення занять у порожньому темному залі лунають повільні кроки на сцені, рипіння підлоги та відлуння у коридорах.
+Ймовірність правди: 0% (Звичайні акустичні ефекти порожньої будівлі та температурна усадка дерев'яних конструкцій).
+
+Прокляття 13-ї сходинки
+Суть: Повір'я, за яким сходинка №13 на центральних сходах приносить невдачу. Вважається, що учень, який наступить на неї під час перерви, обов'язково отримає двійку або буде викликаний до директора.
+Ймовірність правди: 0% (Звичайний забобон для виправдання непідготовлених уроків).
+
+Старий цвинтар під майданчиком
+Суть: Популярна серед молодших класів байка про те, що спортивний майданчик ліцею збудований на місці давнього забутого цвинтаря, через що ввечері там спостерігаються дивні тіні.
+Ймовірність правди: 0% (На цій території історично були звичайні пустирі та поля до забудови району).`
+        }];
+
+        function formatNewsText(value) {
+            return escapeHtml(value).replace(/\n/g, '<br>');
+        }
+
+        function escapeHtml(value) {
+            return String(value || '').replace(/[&<>'"]/g, character => ({
+                '&': '&amp;',
+                '<': '&lt;',
+                '>': '&gt;',
+                "'": '&#39;',
+                '"': '&quot;'
+            })[character]);
+        }
+
+        const archiveDb = new Promise((resolve, reject) => {
+            const request = indexedDB.open('scp13-archive-files', 1);
+            request.onupgradeneeded = () => request.result.createObjectStore('files', { keyPath: 'id' });
+            request.onsuccess = () => resolve(request.result);
+            request.onerror = () => reject(request.error);
+        });
+
+        async function saveArchiveFile(file) {
+            const id = crypto.randomUUID();
+            const database = await archiveDb;
+            await new Promise((resolve, reject) => {
+                const transaction = database.transaction('files', 'readwrite');
+                transaction.objectStore('files').add({ id, blob: file, name: file.name, type: file.type });
+                transaction.oncomplete = resolve;
+                transaction.onerror = () => reject(transaction.error);
+            });
+            return { id, name: file.name, type: file.type };
+        }
+
+        async function getArchiveFile(id) {
+            const database = await archiveDb;
+            return new Promise((resolve, reject) => {
+                const request = database.transaction('files').objectStore('files').get(id);
+                request.onsuccess = () => resolve(request.result);
+                request.onerror = () => reject(request.error);
+            });
+        }
+
+        async function renderVideoList() {
+            const videos = JSON.parse(localStorage.getItem('scp13-owner-videos') || '[]');
+            const list = document.getElementById('video-list');
+            list.innerHTML = '';
+
+            for (const video of videos) {
+                const savedFile = await getArchiveFile(video.id);
+                if (!savedFile) {
+                    continue;
+                }
+
+                const item = document.createElement('article');
+                item.className = 'saved-video';
+                item.innerHTML = `<strong>${escapeHtml(video.name)}</strong>`;
+
+                const player = document.createElement('video');
+                player.controls = true;
+                player.preload = 'metadata';
+                player.src = URL.createObjectURL(savedFile.blob);
+
+                const removeButton = document.createElement('button');
+                removeButton.type = 'button';
+                removeButton.textContent = 'Видалити';
+                removeButton.addEventListener('click', () => {
+                    const remainingVideos = JSON.parse(localStorage.getItem('scp13-owner-videos') || '[]')
+                        .filter(item => item.id !== video.id);
+                    localStorage.setItem('scp13-owner-videos', JSON.stringify(remainingVideos));
+                    item.remove();
+                });
+
+                item.append(player, removeButton);
+                list.append(item);
+            }
+        }
+
+        document.getElementById('add-video-btn').addEventListener('click', async () => {
+            const input = document.getElementById('video-input');
+            const file = input.files[0];
+            if (!file) {
+                return;
+            }
+
+            const savedFile = await saveArchiveFile(file);
+            const videos = JSON.parse(localStorage.getItem('scp13-owner-videos') || '[]');
+            videos.unshift({ id: savedFile.id, name: savedFile.name });
+            localStorage.setItem('scp13-owner-videos', JSON.stringify(videos));
+            input.value = '';
+            await renderVideoList();
+        });
+
+        function getYoutubeEmbedUrl(value) {
+            try {
+                const url = new URL(value);
+                let videoId = '';
+                if (url.hostname === 'youtu.be') {
+                    videoId = url.pathname.slice(1);
+                } else if (url.hostname.endsWith('youtube.com')) {
+                    videoId = url.searchParams.get('v') || url.pathname.split('/').pop();
+                }
+                return videoId && /^[\w-]{11}$/.test(videoId)
+                    ? `https://www.youtube.com/embed/${videoId}`
+                    : '';
+            } catch (error) {
+                return '';
+            }
+        }
+
+        document.getElementById('youtube-form').addEventListener('submit', event => {
+            event.preventDefault();
+            const frame = document.getElementById('youtube-frame');
+            const embedUrl = getYoutubeEmbedUrl(document.getElementById('youtube-url').value.trim());
+            if (!embedUrl) {
+                frame.removeAttribute('src');
+                frame.style.display = 'none';
+                return;
+            }
+            frame.src = embedUrl;
+            frame.style.display = 'block';
+            localStorage.setItem('scp13-owner-youtube-url', embedUrl);
+        });
+
+        const savedYoutubeUrl = localStorage.getItem('scp13-owner-youtube-url');
+        if (savedYoutubeUrl) {
+            document.getElementById('youtube-frame').src = savedYoutubeUrl;
+            document.getElementById('youtube-frame').style.display = 'block';
+        }
+
+        let gameTimer;
+        let gameScore = 0;
+        let gameTime = 30;
+
+        function moveGameTarget() {
+            const field = document.getElementById('game-field');
+            const target = document.getElementById('game-target');
+            const maxX = field.clientWidth - target.offsetWidth;
+            const maxY = field.clientHeight - target.offsetHeight;
+            target.style.left = `${Math.max(29, Math.random() * maxX + 29)}px`;
+            target.style.top = `${Math.max(29, Math.random() * maxY + 29)}px`;
+        }
+
+        function stopGame() {
+            clearInterval(gameTimer);
+            document.getElementById('game-target').hidden = true;
+            document.getElementById('start-game-btn').textContent = 'Зіграти ще раз';
+        }
+
+        document.getElementById('start-game-btn').addEventListener('click', () => {
+            clearInterval(gameTimer);
+            gameScore = 0;
+            gameTime = 30;
+            document.getElementById('game-score').textContent = gameScore;
+            document.getElementById('game-time').textContent = gameTime;
+            document.getElementById('game-target').hidden = false;
+            moveGameTarget();
+
+            gameTimer = setInterval(() => {
+                gameTime -= 1;
+                document.getElementById('game-time').textContent = gameTime;
+                if (gameTime <= 0) {
+                    stopGame();
+                }
+            }, 1000);
+        });
+
+        document.getElementById('game-target').addEventListener('click', () => {
+            if (gameTime <= 0) {
+                return;
+            }
+            gameScore += 1;
+            document.getElementById('game-score').textContent = gameScore;
+            moveGameTarget();
+        });
+
+        function updateControlStats() {
+            const tasks = JSON.parse(localStorage.getItem('scp13-owner-tasks') || '[]');
+            const archive = JSON.parse(localStorage.getItem('scp13-archive') || '[]');
+            document.getElementById('task-count').textContent = tasks.length;
+            document.getElementById('archive-count').textContent = archive.length;
+        }
+
+        function writeIncident(message) {
+            const log = document.getElementById('incident-log');
+            const time = new Date().toLocaleTimeString('uk-UA');
+            log.textContent += `\n[${time}] ${message}`;
+            log.scrollTop = log.scrollHeight;
+        }
+
+        document.getElementById('incident-btn').addEventListener('click', () => {
+            const incidents = [
+                'Тестовий сигнал: зафіксовано короткий сплеск активності в секторі 13.',
+                'Тестовий сигнал: об’єкт переведено у режим спостереження.',
+                'Тестовий сигнал: журнал доступу перевірено, порушень не знайдено.'
+            ];
+            const incident = incidents[Math.floor(Math.random() * incidents.length)];
+            document.getElementById('system-status').textContent = 'СПОСТЕРЕЖЕННЯ';
+            writeIncident(incident);
+            setTimeout(() => {
+                document.getElementById('system-status').textContent = 'НОРМА';
+            }, 1800);
+        });
+
+        document.getElementById('clear-log-btn').addEventListener('click', () => {
+            document.getElementById('incident-log').textContent = '[SYSTEM] Журнал очищено працівником.';
+            document.getElementById('system-status').textContent = 'НОРМА';
+        });
+
+        async function renderArchiveEntries() {
+            const entries = JSON.parse(localStorage.getItem('scp13-archive') || '[]');
+            document.getElementById('archive-list').innerHTML = entries.map(entry =>
+                `<article class="entry-item"><strong>${escapeHtml(entry.title)}</strong><p>${escapeHtml(entry.content)}</p></article>`
+            ).join('');
+        }
+
+        function addEntry(event, titleId, contentId) {
+            event.preventDefault();
+            const entry = {
+                title: document.getElementById(titleId).value.trim(),
+                content: document.getElementById(contentId).value.trim(),
+                createdAt: Date.now()
+            };
+
+            const entries = JSON.parse(localStorage.getItem('scp13-news') || '[]');
+            entries.unshift(entry);
+            localStorage.setItem('scp13-news', JSON.stringify(entries));
+
+            event.target.reset();
+            renderEntries([...defaultNews, ...entries], 'news-list');
+        }
+
+        document.getElementById('news-form').addEventListener('submit', event => {
+            addEntry(event, 'news-title', 'news-content');
+        });
+
+        renderEntries([...defaultNews, ...JSON.parse(localStorage.getItem('scp13-news') || '[]')], 'news-list');
+        renderArchiveEntries();
+        renderVideoList();
+        updateControlStats();
+
+        document.getElementById('archive-list').addEventListener('click', async event => {
+            const link = event.target.closest('[data-file-id]');
+            if (!link) {
+                return;
+            }
+            event.preventDefault();
+            const file = await getArchiveFile(link.dataset.fileId);
+            if (!file) {
+                return;
+            }
+            const url = URL.createObjectURL(file.blob);
+            const downloadLink = document.createElement('a');
+            downloadLink.href = url;
+            downloadLink.download = file.name;
+            downloadLink.click();
+            URL.revokeObjectURL(url);
+        });
+
+        enterSite('guest');
+
+        function switchPage(pageId, element, titleText) {
+            const targetElement = element || document.querySelector('[onclick*="news-page"]');
+            document.querySelectorAll('.menu-link').forEach(link => link.classList.remove('active'));
+            if (targetElement) {
+                targetElement.classList.add('active');
+            }
+
+            document.querySelectorAll('.page-tab').forEach(page => page.classList.remove('active-page'));
+            const page = document.getElementById(pageId);
+            if (page) {
+                page.classList.add('active-page');
+            }
+
+            document.title = titleText || 'SCP 13';
+        }
+    </script>
+</body>
+</html>
