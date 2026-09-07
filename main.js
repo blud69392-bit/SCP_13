@@ -1,4 +1,4 @@
-const API_URL = 'http://localhost:3000';
+const API_URL = 'https://scp-13-backend.onrender.com';
 
 // 1. Отримання новин із сервера
 async function loadNews() {
@@ -6,8 +6,12 @@ async function loadNews() {
     const response = await fetch(`${API_URL}/api/news`);
     const result = await response.json();
 
+    console.log('Завантажені новини:', result); // Для отладки
+
     if (result.success) {
       renderNews(result.data);
+    } else {
+      console.error('Помилка сервера:', result.message);
     }
   } catch (error) {
     console.error('[SCP ERROR] Помилка завантаження новин:', error);
